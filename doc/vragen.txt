@@ -1,0 +1,9 @@
+Parameters:
+- Als de parameternamen in 1 select worden getoond, dan moet het onderscheid tussen bijv formulier velden en item tabel velden duidelijk zijn.
+Namen kunnen gelijk zijn. Ik denk dat tonen in aparte selects beter is.
+- ik moet de id's van de parameters meekrijgen.
+- Ik moet bij bijv. de formuliervelden de hele vraag tonen. Is dat niet wat lang???. Stel je lost het op met coded, dan moeten die bij de definitie van het formulier vaststaan en zeggen ze niets (abstract).
+- Misschien kan het ook wel voorkomen dat er dezelfde vragen in het formulier staan, maar dan in een andere context. Ik kan daar geen onderscheid in maken.
+
+Waarde:
+- Waardes kunnen vrij zijn (gewone input) of een keuze (select). De parameterkeuze bepaalt of ik een select, input of kalender toon. Dit moet ik wel weten.

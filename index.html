@@ -297,18 +297,16 @@
 												<option value="actie4">actie #4</option>
 												<option value="actie5">actie #5</option>
 											</select>
-											<div style="position: absolute; right: 0px; top: 0px;">
-												<a href="javascript:;" class="actionAdd btn btn-sm"><i class="fa fa-plus"></i></a>
-											</div>
+											<a href="javascript:;" class="actionAdd btn btn-sm" style="position: absolute; right: 0px; top: 5px;"><i class="fa fa-plus"></i></a>
 										</div>
 
 										<ul class="actionList compact"></ul>
 									</td>
 									<td>
-										<select id="ruleCombination" class="form-control input-sm">
+										<select class="combinationSelect form-control input-sm">
 											<option value=""></option>
-											<option value="">&amp;&amp;</option>
-											<option value="">||</option>
+											<option value="&amp;&amp;">&amp;&amp;</option>
+											<option value="||">||</option>
 										</select>
 									</td>
 								</tr>
@@ -379,19 +377,45 @@
 					$td.find('.valueSelect').hide();
 				}
 
-				function handleActionAdd($a) {
-					var $td = $a.closest('td');
+				function handleActionAdd($el) {
+					var $td = $el.closest('td');
 					var $sel = $td.find('.actionSelect');
 					var txt = $sel.find('option:selected').text();
 					if ($sel.val()) {
 						$td.find('.actionList').append(
 							'<li data-action="'
 							+ $sel.val()
-							+ '" >'
-							// + '" style="position: absolute; right: 0px; top: 0px;" >'
+							+ '" class="pos-relative" >'
 							+ txt
-							+ '<a href="javascript:;" class="actionDel btn btn-sm"><i class="fa fa-minus"></i></a>'
-							 + '</li>');
+							+ '<a href="javascript:;" class="actionDel btn btn-sm" style="position: absolute; right: -30px; top: -5px;"><i class="fa fa-minus"></i></a>'
+							+ '</li>');
+						$sel.val('');
+					}
+				}
+
+				function handleActionDel($el) {
+					var $li = $el.closest('li');
+					$li.remove();
+				}
+
+				function handleCombinationSelectChange($el) {
+					var $row = $el.closest('tr');
+					if ($el.val()) {
+						//&& of || gekozen
+						//Alleen als het de laatste is
+						if ($row.next('.ruleDefinitionRow').length == 0) {
+							$row.find('.actionList').children().remove();
+							var $row2 = $row.clone();
+							//row2 initialiseren naar begin staat!!!!!
+							//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+							//
+							// $row2.find('.actionList').children().remove();
+							$row2.insertAfter($row);
+						}
+					} else {
+						//Dit is de laatste
+						////Alle volgende rijen verwijderen
+						$row.next('.ruleDefinitionRow').remove();
 					}
 				}
 
@@ -429,8 +453,10 @@
 						var $row = $el.closest('tr');
 						// console.log($row);
 						if ($row.hasClass('ruleDefinitionRow')) {
-							if ($el.hasClass('actionAdd')) {
+							if ($el.parent().hasClass('actionAdd') || $el.hasClass('actionAdd')) {
 								handleActionAdd($el);
+							} else if ($el.parent().hasClass('actionDel') || $el.hasClass('actionDel')) {
+								handleActionDel($el);
 							}
 						} else {
 							initRuleDefinition($row);
@@ -445,8 +471,9 @@
 							handleParamEntitySelectChange($el);
 						} else if ($el.hasClass('paramItemSelect')) {
 							handleParamItemSelectChange($el);
+						} else if ($el.hasClass('combinationSelect')) {
+							handleCombinationSelectChange($el);
 						}
-
 					});
 
 

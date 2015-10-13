@@ -11,6 +11,13 @@
 		<link href="resources/css/prism.css" rel="stylesheet">
 		<link href="resources/subscribers/Kastanje/css/subscriber.css" rel="stylesheet">
 		<!-- local  css -->
+		<style type="text/css">
+			ul.compact {
+				list-style-position: inside;
+				margin: 0;
+				padding: 0;
+			}
+		</style>
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
@@ -169,19 +176,59 @@
 						</div> <!-- editDiv -->
 					</form> <!-- editForm -->
 
-					<div id="rulesDiv" style="display: none;">
-						<table>
-							<tbody>
+					<div id="rulesDiv" class="panel panel-forms">
+						<div class="panel-heading clearfix">
+							<strong>Business rules</strong>
+						</div>
+						<table class="table table-condensed table-hover">
+							<thead>
 								<tr>
+									<th class="col-sm-2">Trigger</th>
+									<th class="col-sm-3">Parameter</th>
+									<th class="col-sm-1">Operatie</th>
+									<th class="col-sm-2">Waarde</th>
+									<th class="col-sm-3">Acties</th>
+									<th class="col-sm-1">Combinatie</th>
+								</tr>
+							</thead>
+							<tbody id="rulesTbl">
+								<tr class="pointer">
+									<td>Periodiek 30min</td>
+									<td>Wat doet het niet?</td>
+									<td>==</td>
+									<td>waarde #4</td>
 									<td>
-										<select id="trigger">
+										<ul class="compact">
+											<li>actie #2</li>
+											<li>actie #4</li>
+										</ul>
+
+									</td>
+									<td></td>
+								</tr>
+								<tr class="pointer">
+									<td>Vast 12:30</td>
+									<td>Datum aanmaak</td>
+									<td>>&gt;=</td>
+									<td>12-10-2015</td>
+									<td>
+										<ul class="compact">
+											<li>actie #1</li>
+										</ul>
+
+									</td>
+									<td></td>
+								</tr>
+								<tr class="ruleDefinitionRow" style="display: none;">
+									<td>
+										<select class="triggerSelect form-control input-sm">
 											<option value="trigPeriod">Periodiek</option>
 											<option value="trigFixed">Vast tijdstip</option>
 											<option value="trigSave">Opslaan</option>
 											<option value="trigStatusChange">Statuswijzing</option>
 										</select>
 										<div class="trigParams trigPeriod">
-											<select>
+											<select class="form-control input-sm">
 												<option>15 min</option>
 												<option>30 min</option>
 												<option>60 min</option>
@@ -192,22 +239,82 @@
 											</select>
 										</div>
 										<div class="trigParams trigFixed" style="display: none;">
-											<input type="text" value="12:30">
+											<input type="text" class="form-control input-sm" value="12:30">
 										</div>
 										<div class="trigParams trigStatusChange" style="display: none;">
-											<input type="text" value="status #2">
+											<input type="text" class="form-control input-sm" value="status #2">
 										</div>
 									</td>
-									<td></td>
-									<td></td>
-									<td></td>
+									<td>
+										<div>
+											<select class="paramEntitySelect form-control input-sm">
+												<option value="">Kies formulier veld...</option>
+												<option value="1">Wat is het onderwerp van uw klacht?</option>
+												<option value="2">Welk onderdeel betreft het?</option>
+												<option value="3">Wat doet het niet</option>
+											</select>
+										</div>
+										<div>
+											<select class="paramItemSelect form-control input-sm">
+												<option value="">Kies item veld...</option>
+												<option value="1">Datum aanmaak</option>
+												<option value="2">Status</option>
+											</select>
+										</div>
+									</td>
+									<td>
+										<select class="operationSelect form-control input-sm">
+											<option value="">==</option>
+											<option value="">!=</option>
+											<option value="">&lt;</option>
+											<option value="">&lt;=</option>
+											<option value="">&gt;</option>
+											<option value="">&gt;=</option>
+										</select>
+									</td>
+									<td>
+										<div class="paramValue valueSelect">
+											<select id="valueSelect" class="form-control input-sm">
+												<option value="">Kies...</option>
+												<option value="waarde #1">waarde #1</option>
+												<option value="waarde #1">waarde #2</option>
+												<option value="waarde #1">waarde #3</option>
+												<option value="waarde #1">waarde #4</option>
+												<option value="waarde #1">waarde #5</option>
+											</select>
+										</div>
+										<div class="paramValue valueInput" style="display: none;">
+											<input id="valueInput" class="form-control input-sm">
+										</div>
+									</td>
+									<td class="pos-relative" style="padding-right: 30px;">
+										<div>
+											<select class="actionSelect form-control input-sm">
+												<option value="">Kies...</option>
+												<option value="actie1">actie #1</option>
+												<option value="actie2">actie #2</option>
+												<option value="actie3">actie #3</option>
+												<option value="actie4">actie #4</option>
+												<option value="actie5">actie #5</option>
+											</select>
+											<div style="position: absolute; right: 0px; top: 0px;">
+												<a href="javascript:;" class="actionAdd btn btn-sm"><i class="fa fa-plus"></i></a>
+											</div>
+										</div>
+
+										<ul class="actionList compact"></ul>
+									</td>
+									<td>
+										<select id="ruleCombination" class="form-control input-sm">
+											<option value=""></option>
+											<option value="">&amp;&amp;</option>
+											<option value="">||</option>
+										</select>
+									</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
-
-
-
 
 				</div> <!-- .content-area -->
 			</div> <!-- .main-content -->
@@ -248,26 +355,61 @@
 			(function() {
 
 				function toggleDetail() {
-					$('#detailDiv, #editDiv').toggle('slow');
+					$('#detailDiv, #rulesDiv, #editDiv').toggle('slow');
 					$('#back-to-detail').parent().toggle();
 				}
 
-				function toggleRules() {
-					$('#detailDiv, #rulesDiv').toggle('slow');
-					$('#back-to-detail').parent().toggle();
+				function handleTriggerSelectChange($el) {
+					var $td = $el.closest('td');
+					$td.find('.trigParams').hide();
+					$td.find('.' + $el.val()).show();
 				}
 
-				function toggleTriggerParams($sel) {
-					$('.trigParams').hide();
-					$('.' + $sel.val()).show();
+				function handleParamEntitySelectChange($el) {
+					var $td = $el.closest('td');
+					$td.find('.paramItemSelect').val('');
+					$td.find('.valueSelect').show();
+					$td.find('.valueInput').hide();
+				}
 
+				function handleParamItemSelectChange($el) {
+					var $td = $el.closest('td');
+					$td.find('.paramEntitySelect').val('');
+					$td.find('.valueInput').show();
+					$td.find('.valueSelect').hide();
+				}
+
+				function handleActionAdd($a) {
+					var $td = $a.closest('td');
+					var $sel = $td.find('.actionSelect');
+					var txt = $sel.find('option:selected').text();
+					if ($sel.val()) {
+						$td.find('.actionList').append(
+							'<li data-action="'
+							+ $sel.val()
+							+ '" >'
+							// + '" style="position: absolute; right: 0px; top: 0px;" >'
+							+ txt
+							+ '<a href="javascript:;" class="actionDel btn btn-sm"><i class="fa fa-minus"></i></a>'
+							 + '</li>');
+					}
+				}
+
+				function initRuleDefinition($row) {
+					var $rows = $('.ruleDefinitionRow').hide().each(function(index) {
+						// console.log(index);
+						if (index > 0) {
+							$(this).remove();
+						}
+					});
+					console.log($('.ruleDefinitionRow'))
+					// $row.insertAfter($('.ruleDefinitionRow'));
+					$('.ruleDefinitionRow').insertAfter($row).show();
 				}
 
 				$(function() {
 
 					YRMNU.activateTopmenuItem('#topMenu_SystemManagement');
-
-					toggleRules();
 
 					$('#editBtn').on('click', function() {
 						toggleDetail();
@@ -276,15 +418,37 @@
 					$('#editForm').on('submit', function(event) {
 						event.preventDefault();
 						location.href='index.html';
-					})
+					});
 
 					$('#rulesBtn').on('click', function() {
 						toggleRules();
 					});
 
-					$('#trigger').on('change', function() {
-						toggleTriggerParams($(this));
+					$('#rulesTbl').on('click', function(event) {
+						var $el = $(event.target);
+						var $row = $el.closest('tr');
+						// console.log($row);
+						if ($row.hasClass('ruleDefinitionRow')) {
+							if ($el.hasClass('actionAdd')) {
+								handleActionAdd($el);
+							}
+						} else {
+							initRuleDefinition($row);
+						}
 					});
+
+					$('#rulesTbl').on('change', function(event) {
+						var $el = $(event.target);
+						if ($el.hasClass('triggerSelect')) {
+							handleTriggerSelectChange($el);
+						} else if ($el.hasClass('paramEntitySelect')) {
+							handleParamEntitySelectChange($el);
+						} else if ($el.hasClass('paramItemSelect')) {
+							handleParamItemSelectChange($el);
+						}
+
+					});
+
 
 				});
 

@@ -1,0 +1,17 @@
+.main-intro {
+	background: url('../img/header.jpg') no-repeat left top;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+.navbar-brand {
+	padding: 5px 7px;
+}
+.navbar .logo {
+	background: url('../img/logo.png') no-repeat left top;
+	background-size: 138px 41px;
+	width: 138px;
+	height: 41px;
+	display: inline-block;
+}

@@ -390,21 +390,27 @@
 
 				function handleActionSelectChange($el) {
 					var $td = $el.closest('td');
-					var txt = $el.find('option:selected').text();
-					if ($el.val()) {
+					var $opt = $el.find('option:selected');
+					var v = $el.val();
+					if (v) {
 						$td.find('.actionList').append(
 							'<li data-action="'
-							+ $el.val()
+							+ v
 							+ '" class="pos-relative" >'
-							+ txt
+							+ $opt.text()
 							+ '<a href="javascript:;" class="actionDel btn btn-sm" style="position: absolute; right: -30px; top: -5px;"><i class="fa fa-minus"></i></a>'
 							+ '</li>');
+						$opt.hide();
 						$el.val('');
 					}
 				}
 
 				function handleActionDel($el) {
+					var $td = $el.closest('td');
 					var $li = $el.closest('li');
+					var v = $li.attr('data-action');
+
+					// $td.find('.actionSelect').children('[value="' + v + '"]).show();
 					$li.remove();
 				}
 
@@ -437,8 +443,8 @@
 
 						//Alle volgende rijen verwijderen
 						$row.nextAll('.ruleDefinitionRow').remove();
-						//Je moet weer acties kunnen selecteren
-						$row.find('.actionSelect').show();
+						//Je moet weer acties kunnen selecteren en alle opties zichtbaar
+						$row.find('.actionSelect').show().children().show();
 					}
 				}
 
@@ -498,7 +504,11 @@
 					$row.find('.valueInput').val('');
 
 					//acties kolom
-					$row.find('.actionSelect').show()[0].selectedIndex = 0;
+					$sel = $row.find('.actionSelect');
+					$sel.show()[0].selectedIndex = 0;
+					//Opties zichtbaar maken
+					$sel.children().show();
+
 					$row.find('.actionList').empty();
 
 					//combinatie kolom

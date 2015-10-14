@@ -1,3 +1,11 @@
+Jakko,
+
+Ik heb een mock gemaakt van het beheer van de business-rules
+Het is een html-mock die op github staat. (Kan ik er ook thuis wat aan doen)
+Je kunt de zip-file downloaden via: https://github.com/TonHolsink/b-rules/archive/master.zip
+Als je hem hebt uitgepakt: index.html openen
+
+
 Parameters:
 - Als de parameternamen in 1 select worden getoond, dan moet het onderscheid tussen bijv formulier velden en item tabel velden duidelijk zijn.
 Namen kunnen gelijk zijn. Ik denk dat tonen in aparte selects beter is.

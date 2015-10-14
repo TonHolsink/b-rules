@@ -220,28 +220,30 @@
 								</tr>
 								<tr class="ruleDefinitionRow" style="display: none;">
 									<td>
-										<select class="triggerSelect form-control input-sm">
-											<option value="trigPeriod">Periodiek</option>
-											<option value="trigFixed">Vast tijdstip</option>
-											<option value="trigSave">Opslaan</option>
-											<option value="trigStatusChange">Statuswijzing</option>
-										</select>
-										<div class="trigParams trigPeriod">
-											<select class="form-control input-sm">
-												<option>15 min</option>
-												<option>30 min</option>
-												<option>60 min</option>
-												<option>12 uur</option>
-												<option>Dagelijks</option>
-												<option>Wekelijks</option>
-												<option>Maandelijks</option>
+										<div class="triggerDiv">
+											<select class="triggerSelect form-control input-sm">
+												<option value="trigPeriod">Periodiek</option>
+												<option value="trigFixed">Vast tijdstip</option>
+												<option value="trigSave">Opslaan</option>
+												<option value="trigStatusChange">Statuswijzing</option>
 											</select>
-										</div>
-										<div class="trigParams trigFixed" style="display: none;">
-											<input type="text" class="form-control input-sm" value="12:30">
-										</div>
-										<div class="trigParams trigStatusChange" style="display: none;">
-											<input type="text" class="form-control input-sm" value="status #2">
+											<div class="trigParams trigPeriod">
+												<select class="form-control input-sm">
+													<option>15 min</option>
+													<option>30 min</option>
+													<option>60 min</option>
+													<option>12 uur</option>
+													<option>Dagelijks</option>
+													<option>Wekelijks</option>
+													<option>Maandelijks</option>
+												</select>
+											</div>
+											<div class="trigParams trigFixed" style="display: none;">
+												<input type="text" class="form-control input-sm" value="12:30">
+											</div>
+											<div class="trigParams trigStatusChange" style="display: none;">
+												<input type="text" class="form-control input-sm" value="status #2">
+											</div>
 										</div>
 									</td>
 									<td>
@@ -293,12 +295,16 @@
 										</select>
 										<ul class="actionList compact"></ul>
 									</td>
-									<td>
+									<td class="pos-relative">
 										<select class="combinationSelect form-control input-sm">
 											<option value=""></option>
 											<option value="&amp;&amp;">&amp;&amp;</option>
 											<option value="||">||</option>
 										</select>
+										<div id="ruleToolbar" class="btn-group" style="position: absolute; bottom: 0; right: 15px;">
+											<a id="ruleEscapeBtn" class="btn btn-default btn-sm" href="javascript:;"><i class="fa fa-close"></i></a>
+											<a id="ruleSaveBtn" class="btn btn-default btn-sm" href="javascript:;"><i class="fa fa-save"></i></a>
+										</div>
 									</td>
 								</tr>
 							</tbody>
@@ -397,16 +403,30 @@
 						//&& of || gekozen
 						//Alleen als het de laatste is
 						if ($row.next('.ruleDefinitionRow').length == 0) {
+							//Acties verbergen en legen
 							$row.find('.actionSelect').hide();
 							$row.find('.actionList').empty();
+
+							//Toolbar ff uit de DOM halen (events bewaren)
+							//om deze in de laatste rij te kunnen plaatsen
+							var $bar = $('#ruleToolbar').detach();
 							var $row2 = $row.clone();
+							//Toolbar er weer in
+							$row2.children().eq(-1).append($bar);
+							//TriggerDiv nieuwe rij verwijderen
+							$row2.find('.triggerDiv').remove();
 							//row2 initialiseren naar begin staat!!!!!
 							initRuleDefinitionRow($row2).insertAfter($row);
 						}
 					} else {
 						//Dit is de laatste
-						////Alle volgende rijen verwijderen
+
+						//Toolbar in deze rij plaatsen, want het wordt de laatste rij
+						$row.children().eq(-1).append($('#ruleToolbar'));
+
+						//Alle volgende rijen verwijderen
 						$row.nextAll('.ruleDefinitionRow').remove();
+						//Je moet weer acties kunnen selecteren
 						$row.find('.actionSelect').show();
 					}
 				}
@@ -426,6 +446,9 @@
 						// Niet zichtbaar, dus tonen
 						//Verwijder alle ruleDefinitionRow rijen, behalve de eerste
 						var $rowDef = $('.ruleDefinitionRow').eq(0);
+						//Toolbar in deze rij plaatsen, want het wordt de laatste rij
+						$rowDef.children().eq(-1).append($('#ruleToolbar'));
+
 						$rowDef.nextAll('.ruleDefinitionRow').remove();
 						//Initialiseer en toon de eerste ruleDefinitionRow rij
 						initRuleDefinitionRow($rowDef).insertAfter($row).show();
@@ -440,8 +463,11 @@
 					//Initialiseert een ruleDefinitionRow
 					//trigger kolom
 					var $sel = $row.find('.triggerSelect');
-					$sel[0].selectedIndex = 0;
-					$sel.trigger('change');
+					//Kan er niet zijn
+					if ($sel.length > 0) {
+						$sel[0].selectedIndex = 0;
+						$sel.trigger('change');
+					}
 
 					//parameter kolom
 					var $sel = $row.find('.paramEntitySelect');
@@ -509,6 +535,16 @@
 						} else if ($el.hasClass('combinationSelect')) {
 							handleCombinationSelectChange($el);
 						}
+					});
+
+					$('#ruleEscapeBtn').on('click', function() {
+						$('.ruleDefinitionRow').hide();
+					});
+
+					$('#ruleSaveBtn').on('click', function() {
+						//Voorlopig alleen verbergen
+						$('.ruleDefinitionRow').hide();
+						TOOLS.showToast('success', 'De business rule is opgeslagen');
 					});
 
 

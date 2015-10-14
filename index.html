@@ -409,8 +409,8 @@
 					var $td = $el.closest('td');
 					var $li = $el.closest('li');
 					var v = $li.attr('data-action');
-
-					// $td.find('.actionSelect').children('[value="' + v + '"]).show();
+					//optie zichtbaar maken in select
+					$td.find('.actionSelect').children('[value="' + v + '"]').show();
 					$li.remove();
 				}
 

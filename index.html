@@ -103,7 +103,6 @@
 						<div class="panel-heading clearfix">
 							<strong>Formulier details</strong>
 							<div class="pull-right">
-								<a href="javascript:;" id="rulesBtn" class="btn btn-default btn-sm">Business rules</a>
 								<a href="javascript:;" id="editBtn" class="btn btn-default btn-sm">Bewerken</a>
 							</div>
 						</div>
@@ -209,7 +208,7 @@
 								<tr class="pointer">
 									<td>Vast 12:30</td>
 									<td>Datum aanmaak</td>
-									<td>>&gt;=</td>
+									<td>&gt;=</td>
 									<td>12-10-2015</td>
 									<td>
 										<ul class="compact">
@@ -273,33 +272,25 @@
 										</select>
 									</td>
 									<td>
-										<div class="paramValue valueSelect">
-											<select id="valueSelect" class="form-control input-sm">
-												<option value="">Kies...</option>
-												<option value="waarde #1">waarde #1</option>
-												<option value="waarde #1">waarde #2</option>
-												<option value="waarde #1">waarde #3</option>
-												<option value="waarde #1">waarde #4</option>
-												<option value="waarde #1">waarde #5</option>
-											</select>
-										</div>
-										<div class="paramValue valueInput" style="display: none;">
-											<input id="valueInput" class="form-control input-sm">
-										</div>
+										<select class="valueSelect form-control input-sm">
+											<option value="">Kies...</option>
+											<option value="waarde #1">waarde #1</option>
+											<option value="waarde #1">waarde #2</option>
+											<option value="waarde #1">waarde #3</option>
+											<option value="waarde #1">waarde #4</option>
+											<option value="waarde #1">waarde #5</option>
+										</select>
+										<input id="valueInput" class="form-control input-sm" style="display: none;">
 									</td>
-									<td class="pos-relative" style="padding-right: 30px;">
-										<div>
-											<select class="actionSelect form-control input-sm">
-												<option value="">Kies...</option>
-												<option value="actie1">actie #1</option>
-												<option value="actie2">actie #2</option>
-												<option value="actie3">actie #3</option>
-												<option value="actie4">actie #4</option>
-												<option value="actie5">actie #5</option>
-											</select>
-											<a href="javascript:;" class="actionAdd btn btn-sm" style="position: absolute; right: 0px; top: 5px;"><i class="fa fa-plus"></i></a>
-										</div>
-
+									<td style="padding-right: 30px;">
+										<select class="actionSelect form-control input-sm">
+											<option value="">Kies...</option>
+											<option value="actie1">actie #1</option>
+											<option value="actie2">actie #2</option>
+											<option value="actie3">actie #3</option>
+											<option value="actie4">actie #4</option>
+											<option value="actie5">actie #5</option>
+										</select>
 										<ul class="actionList compact"></ul>
 									</td>
 									<td>
@@ -377,19 +368,18 @@
 					$td.find('.valueSelect').hide();
 				}
 
-				function handleActionAdd($el) {
+				function handleActionSelectChange($el) {
 					var $td = $el.closest('td');
-					var $sel = $td.find('.actionSelect');
-					var txt = $sel.find('option:selected').text();
-					if ($sel.val()) {
+					var txt = $el.find('option:selected').text();
+					if ($el.val()) {
 						$td.find('.actionList').append(
 							'<li data-action="'
-							+ $sel.val()
+							+ $el.val()
 							+ '" class="pos-relative" >'
 							+ txt
 							+ '<a href="javascript:;" class="actionDel btn btn-sm" style="position: absolute; right: -30px; top: -5px;"><i class="fa fa-minus"></i></a>'
 							+ '</li>');
-						$sel.val('');
+						$el.val('');
 					}
 				}
 
@@ -404,31 +394,70 @@
 						//&& of || gekozen
 						//Alleen als het de laatste is
 						if ($row.next('.ruleDefinitionRow').length == 0) {
-							$row.find('.actionList').children().remove();
+							$row.find('.actionSelect').hide();
+							$row.find('.actionList').empty();
 							var $row2 = $row.clone();
 							//row2 initialiseren naar begin staat!!!!!
-							//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-							//
-							// $row2.find('.actionList').children().remove();
-							$row2.insertAfter($row);
+							initRuleDefinitionRow($row2).insertAfter($row);
 						}
 					} else {
 						//Dit is de laatste
 						////Alle volgende rijen verwijderen
-						$row.next('.ruleDefinitionRow').remove();
+						$row.nextAll('.ruleDefinitionRow').remove();
+						$row.find('.actionSelect').show();
 					}
 				}
 
-				function initRuleDefinition($row) {
-					var $rows = $('.ruleDefinitionRow').hide().each(function(index) {
-						// console.log(index);
-						if (index > 0) {
-							$(this).remove();
-						}
-					});
-					console.log($('.ruleDefinitionRow'))
-					// $row.insertAfter($('.ruleDefinitionRow'));
-					$('.ruleDefinitionRow').insertAfter($row).show();
+				function handleRuleRowClick($row) {
+					//Doe alleen iets als er onder de regels van  1 rule
+					//geen zichtbare ruleDefinitionRows hangen
+					//nu ga ik nog uit van 1 rule regel, eigenlijk kunnen er dat er meer zijn en moeten
+					//de ruleDefinitionRows verschijnen onder de laatste  rule regel
+					//Deze moet in beeld scrollen. Doe ik nu niet voor de demo. Is te doen
+					//In het echt (met ajax call) controleer ik alleen maar of er zichtbare ruleDefinitonRows
+					//hangen onder de bij elkaar horende rule rij(en).
+					//Zo ja doe niets. Zo nee, doe ajax-call om de nieuwe ruleDefinitionRows op te halen,
+					//gooi alle oude ruleDefinitionRows weg, en hang de nieuwe onder de laatste rule-rij
+
+					if ($row.next('.ruleDefinitionRow:visible').length == 0) {
+						// Niet zichtbaar, dus tonen
+						//Verwijder alle ruleDefinitionRow rijen, behalve de eerste
+						var $rowDef = $('.ruleDefinitionRow').eq(0);
+						$rowDef.nextAll('.ruleDefinitionRow').remove();
+						//Initialiseer en toon de eerste ruleDefinitionRow rij
+						initRuleDefinitionRow($rowDef).insertAfter($row).show();
+
+					} else {
+						//Zichtbaart dus doe niets
+						//Als dit leeg blijft kan de else-tak weg
+					}
+				}
+
+				function initRuleDefinitionRow($row) {
+					//Initialiseert een ruleDefinitionRow
+					//trigger kolom
+					var $sel = $row.find('.triggerSelect');
+					$sel[0].selectedIndex = 0;
+					$sel.trigger('change');
+
+					//parameter kolom
+					$row.find('.paramEntitySelect')[0].selectedIndex = 0;
+					$row.find('.paramItemSelect')[0].selectedIndex = 0;
+
+					//operatie  kolom
+					$row.find('.operationSelect')[0].selectedIndex = 0;
+
+					//waarde kolom
+					$row.find('.valueSelect')[0].selectedIndex = 0;
+
+					//acties kolom
+					$row.find('.actionSelect').show()[0].selectedIndex = 0;
+					$row.find('.actionList').empty();
+
+					//combinatie kolom
+					$row.find('.combinationSelect')[0].selectedIndex = 0;
+
+					return $row;
 				}
 
 				$(function() {
@@ -453,13 +482,11 @@
 						var $row = $el.closest('tr');
 						// console.log($row);
 						if ($row.hasClass('ruleDefinitionRow')) {
-							if ($el.parent().hasClass('actionAdd') || $el.hasClass('actionAdd')) {
-								handleActionAdd($el);
-							} else if ($el.parent().hasClass('actionDel') || $el.hasClass('actionDel')) {
+							if ($el.parent().hasClass('actionDel') || $el.hasClass('actionDel')) {
 								handleActionDel($el);
 							}
 						} else {
-							initRuleDefinition($row);
+							handleRuleRowClick($row);
 						}
 					});
 
@@ -471,6 +498,8 @@
 							handleParamEntitySelectChange($el);
 						} else if ($el.hasClass('paramItemSelect')) {
 							handleParamItemSelectChange($el);
+						} else if ($el.hasClass('actionSelect')) {
+							handleActionSelectChange($el);
 						} else if ($el.hasClass('combinationSelect')) {
 							handleCombinationSelectChange($el);
 						}

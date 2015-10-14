@@ -451,6 +451,23 @@
 					}
 				}
 
+				function showDefRow($row) {
+					//Verwijder alle ruleDefinitionRow rijen, behalve de eerste
+					var $rowDef = $('.ruleDefinitionRow').eq(0);
+					//Toolbar in deze rij plaatsen, want het wordt de laatste rij
+					$rowDef.children().eq(-1).append($('#ruleToolbar'));
+
+					$rowDef.nextAll('.ruleDefinitionRow').remove();
+					//Initialiseer en toon de eerste ruleDefinitionRow rij
+					if ($row) {
+						//Bestaande regel
+						initRuleDefinitionRow($rowDef).insertAfter($row).show();
+					} else {
+						//Nieuwe regel
+						initRuleDefinitionRow($rowDef).prependTo($('#rulesTbl')).show();
+					}
+				}
+
 				function handleRuleRowClick($row) {
 					//Doe alleen iets als er onder de regels van  1 rule
 					//geen zichtbare ruleDefinitionRows hangen
@@ -468,14 +485,7 @@
 
 					if ($row.next('.ruleDefinitionRow:visible').length == 0) {
 						// Niet zichtbaar, dus tonen
-						//Verwijder alle ruleDefinitionRow rijen, behalve de eerste
-						var $rowDef = $('.ruleDefinitionRow').eq(0);
-						//Toolbar in deze rij plaatsen, want het wordt de laatste rij
-						$rowDef.children().eq(-1).append($('#ruleToolbar'));
-
-						$rowDef.nextAll('.ruleDefinitionRow').remove();
-						//Initialiseer en toon de eerste ruleDefinitionRow rij
-						initRuleDefinitionRow($rowDef).insertAfter($row).show();
+						showDefRow($row);
 
 					} else {
 						//Zichtbaart dus doe niets
@@ -563,6 +573,10 @@
 						} else if ($el.hasClass('combinationSelect')) {
 							handleCombinationSelectChange($el);
 						}
+					});
+
+					$('#newRuleBtn').on('click', function() {
+						showDefRow();
 					});
 
 					$('#ruleEscapeBtn').on('click', function() {

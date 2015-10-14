@@ -191,7 +191,7 @@
 								</tr>
 							</thead>
 							<tbody id="rulesTbl">
-								<tr class="pointer">
+								<tr data-rule="RULE#1" class="pointer">
 									<td>Periodiek 30min</td>
 									<td>Wat doet het niet?</td>
 									<td>==</td>
@@ -205,8 +205,16 @@
 									</td>
 									<td></td>
 								</tr>
-								<tr class="pointer">
+								<tr data-rule="RULE#2" class="pointer">
 									<td>Vast 12:30</td>
+									<td>Welk onderdeel betreft het?</td>
+									<td>==</td>
+									<td>Stofzuiger</td>
+									<td></td>
+									<td>&amp;&amp;</td>
+								</tr>
+								<tr data-rule="RULE#2" class="pointer">
+									<td></td>
 									<td>Datum aanmaak</td>
 									<td>&gt;=</td>
 									<td>12-10-2015</td>
@@ -441,6 +449,10 @@
 					//hangen onder de bij elkaar horende rule rij(en).
 					//Zo ja doe niets. Zo nee, doe ajax-call om de nieuwe ruleDefinitionRows op te halen,
 					//gooi alle oude ruleDefinitionRows weg, en hang de nieuwe onder de laatste rule-rij
+
+					//Zoek de laatste rij op die nog bij de business rule hoort;
+					var ruleCode = $row.attr('data-rule');
+					$row = $('tr[data-rule="' + ruleCode + '"]').eq(-1);
 
 					if ($row.next('.ruleDefinitionRow:visible').length == 0) {
 						// Niet zichtbaar, dus tonen

@@ -1,17 +1,53 @@
 Jakko,
 
-Ik heb een mock gemaakt van het beheer van de business-rules
+Ik heb een mock gemaakt van het beheer van de business-rules.
+Het was een heel gepruts, maar zodoende krijg ik wel meer inzicht in de vereisten.
+
 Het is een html-mock die op github staat. (Kan ik er ook thuis wat aan doen)
 Je kunt de zip-file downloaden via: https://github.com/TonHolsink/b-rules/archive/master.zip
 Als je hem hebt uitgepakt: index.html openen
 
+Je kunt de regels bewerken door op de rij te klikken.
+De invoerrij veschijnt onder de rij waarop wordt geklikt, of (als het een gecombineerde regel is) onder de laatste van de gecombineerde regel.
+Het blijft een mock, dus ophalen van business rules uit de backend doe ik niet na.
+Als je op een gecombineerde (meerregelige) rule klikt, zie je dat niet in het edit gedeelte.
+Normaal gesproken zou ik via ajax een compleet html-fragment van het editgedeelte ophalen.
 
-Parameters:
-- Als de parameternamen in 1 select worden getoond, dan moet het onderscheid tussen bijv formulier velden en item tabel velden duidelijk zijn.
-Namen kunnen gelijk zijn. Ik denk dat tonen in aparte selects beter is.
-- ik moet de id's van de parameters meekrijgen.
-- Ik moet bij bijv. de formuliervelden de hele vraag tonen. Is dat niet wat lang???. Stel je lost het op met coded, dan moeten die bij de definitie van het formulier vaststaan en zeggen ze niets (abstract).
-- Misschien kan het ook wel voorkomen dat er dezelfde vragen in het formulier staan, maar dan in een andere context. Ik kan daar geen onderscheid in maken.
+Kolommen:
+In de Trigger kolom zie je dat het selecteren van 'Periodiek', dropdown keuzes toont, 'Vast tijdstip' een tekstinput, 'Opslaan' geen en 'Statuswijziging' ook een dropdown.
+NOOT:
+Ik moet van te voren weten wat voor type inputelement (dropdown, text, kalender etc.) bij de verschillende triggers hoort en wat eventueel de keuzes zijn als het een lijst is.
 
-Waarde:
-- Waardes kunnen vrij zijn (gewone input) of een keuze (select). De parameterkeuze bepaalt of ik een select, input of kalender toon. Dit moet ik wel weten.
+In de Parameter kolom kun je velden uit het formulier of de itemtabel kiezen
+Ik heb ze in aparte dropdowns gezet, omdat het voorstelbaar is dat de tekst die bij een formulierveld hoort, hetzelfde is als een itemveld.
+Als ze allemaal in 1 lijstje staan, kun je het verschil niet zien.
+In de mock tonen alle formuliervelden een dropdown in de waarde kolom. Alle itemvelden tonen een tekstinput. Dit is alleen maar als voorbeeld.
+Het selecteren van een veld (formulier of item) veroorzaakt in het echt een ajax-call die voor het volgende moet zorgen:
+'Waarde' kolom:
+1) Het type waarde (dropdown, text, kalender etc.)
+2) Eventuele keuzes igv lijstjes
+'Acties' kolom:
+1) De lijst met acties waaruit kan worden gekozen
+NOOT:
+De lijst met formuliervelden is gevuld met de vraagstelling. Dit is kan natuurlijk erg lang worden. Abstracte codes zeggen een gebruiker echter niets.
+Hier moeten we over nadenken.
+
+De 'Operatie' kolom spreekt voor zich.
+
+In de 'Acties' kolom kun je mbv de dropdown een lijst met acties vullen. De acties kun je ook weer verwijderen uit de lijst.
+NOOT:
+Ik kan me voorstellen dat je een actie maar 1 keer kunt kiezen. Ik zou bijvoorbeeld na toevoegen aan de lijst, de actie kunnen verwijderen uit de dropdown.
+En weer toevoegen aan de dropdown als ie wordt verwijderd uit de lijst. Heb ik in de mock niet gedaan.
+
+In de combinatie kolom kun je aangeven of je regels wilt combineren. && en || tonen een nieuwe rij. 'leeg' verwijdert alle rijen die onder de huidige invoerrij liggen en behoren bij de rule.
+
+Vereisten:
+Een tag welke een rule identificeert. Alle regels van een gecombineerde rule hebben dezelfde tag. Zo kan ik zien welke regels bij elkaar horen.
+
+Tenslotte:
+Morgen (Do) ga ik beginnen met de mock in struts te bouwen. Hopelijk kan het als 'jsp-module' die je op meerdere plaatsen kunt gebruiken.
+Qua DTO's heb ik nu nog geen idee. Misschien krijg ik al doende inspiratie.
+Ik ga nu nog wat met de css emmeren.
+
+Groet,
+Ton

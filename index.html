@@ -280,7 +280,7 @@
 											<option value="waarde #1">waarde #4</option>
 											<option value="waarde #1">waarde #5</option>
 										</select>
-										<input id="valueInput" class="form-control input-sm" style="display: none;">
+										<input class="valueInput form-control input-sm" style="display: none;">
 									</td>
 									<td style="padding-right: 30px;">
 										<select class="actionSelect form-control input-sm">
@@ -355,17 +355,20 @@
 				}
 
 				function handleParamEntitySelectChange($el) {
-					var $td = $el.closest('td');
-					$td.find('.paramItemSelect').val('');
-					$td.find('.valueSelect').show();
-					$td.find('.valueInput').hide();
+					var $row = $el.closest('tr');
+					$row.find('.paramItemSelect').val('');
+
+					$row.find('.valueSelect').val('').show();
+					$row.find('.valueInput').val('').hide();
+
 				}
 
 				function handleParamItemSelectChange($el) {
-					var $td = $el.closest('td');
-					$td.find('.paramEntitySelect').val('');
-					$td.find('.valueInput').show();
-					$td.find('.valueSelect').hide();
+					var $row = $el.closest('tr');
+					$row.find('.paramEntitySelect').val('');
+
+					$row.find('.valueSelect').hide();
+					$row.find('.valueInput').val('').show();
 				}
 
 				function handleActionSelectChange($el) {
@@ -441,7 +444,9 @@
 					$sel.trigger('change');
 
 					//parameter kolom
-					$row.find('.paramEntitySelect')[0].selectedIndex = 0;
+					var $sel = $row.find('.paramEntitySelect');
+					$sel[0].selectedIndex = 0;
+					$sel.trigger('change');
 					$row.find('.paramItemSelect')[0].selectedIndex = 0;
 
 					//operatie  kolom
@@ -449,6 +454,7 @@
 
 					//waarde kolom
 					$row.find('.valueSelect')[0].selectedIndex = 0;
+					$row.find('.valueInput').val('');
 
 					//acties kolom
 					$row.find('.actionSelect').show()[0].selectedIndex = 0;

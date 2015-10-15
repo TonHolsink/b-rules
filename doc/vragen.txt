@@ -1,53 +1,94 @@
-Jakko,
+Hoi Jakko,
 
-Ik heb een mock gemaakt van het beheer van de business-rules.
-Het was een heel gepruts, maar zodoende krijg ik wel meer inzicht in de vereisten.
+Wat betreft de waarde kolom:
+De wijze van invoeren moet afhankelijk zijn van het type veld. Dus de de bedoeling is dat het of een vrij veld, een dropdown of een datum selectie kan zijn.
+Het type (vrij, dropdown, datum) en de eventuele lijst voor de dropdown moeten vastgelegd zijn.
 
-Het is een html-mock die op github staat. (Kan ik er ook thuis wat aan doen)
-Je kunt de zip-file downloaden via: https://github.com/TonHolsink/b-rules/archive/master.zip
-Als je hem hebt uitgepakt: index.html openen
+Wat betreft de acties:
+Het 1 of meerdere malen selecteren van een actie is wel mogelijk. Ook het ingeven van meerdere mailadressen bij 1 mailactie moet denk ik wel kunnen.
+Vraag:
+Zijn er slechts een beperkt aantal vast omlijnde actietypen?
+Ik vraag dit, omdat ik dan in de jsp een aantal html-fragmenten kan maken met invoervelden die onder de actie dropdown verschijnen als de bijbehorende actie is geselecteerd.
 
-Je kunt de regels bewerken door op de rij te klikken.
-De invoerrij veschijnt onder de rij waarop wordt geklikt, of (als het een gecombineerde regel is) onder de laatste van de gecombineerde regel.
-Het blijft een mock, dus ophalen van business rules uit de backend doe ik niet na.
-Als je op een gecombineerde (meerregelige) rule klikt, zie je dat niet in het edit gedeelte.
-Normaal gesproken zou ik via ajax een compleet html-fragment van het editgedeelte ophalen.
+Wat betreft de jsp:
+Ik ga nog maar ff verder met deze mock, en nog niet met de struts-versie.
 
-Kolommen:
-In de Trigger kolom zie je dat het selecteren van 'Periodiek', dropdown keuzes toont, 'Vast tijdstip' een tekstinput, 'Opslaan' geen en 'Statuswijziging' ook een dropdown.
-NOOT:
-Ik moet van te voren weten wat voor type inputelement (dropdown, text, kalender etc.) bij de verschillende triggers hoort en wat eventueel de keuzes zijn als het een lijst is.
-
-In de Parameter kolom kun je velden uit het formulier of de itemtabel kiezen
-Ik heb ze in aparte dropdowns gezet, omdat het voorstelbaar is dat de tekst die bij een formulierveld hoort, hetzelfde is als een itemveld.
-Als ze allemaal in 1 lijstje staan, kun je het verschil niet zien.
-In de mock tonen alle formuliervelden een dropdown in de waarde kolom. Alle itemvelden tonen een tekstinput. Dit is alleen maar als voorbeeld.
-Het selecteren van een veld (formulier of item) veroorzaakt in het echt een ajax-call die voor het volgende moet zorgen:
-'Waarde' kolom:
-1) Het type waarde (dropdown, text, kalender etc.)
-2) Eventuele keuzes igv lijstjes
-'Acties' kolom:
-1) De lijst met acties waaruit kan worden gekozen
-NOOT:
-De lijst met formuliervelden is gevuld met de vraagstelling. Dit is kan natuurlijk erg lang worden. Abstracte codes zeggen een gebruiker echter niets.
-Hier moeten we over nadenken.
-
-De 'Operatie' kolom spreekt voor zich.
-
-In de 'Acties' kolom kun je mbv de dropdown een lijst met acties vullen. De acties kun je ook weer verwijderen uit de lijst.
-NOOT:
-Ik kan me voorstellen dat je een actie maar 1 keer kunt kiezen. Ik zou bijvoorbeeld na toevoegen aan de lijst, de actie kunnen verwijderen uit de dropdown.
-En weer toevoegen aan de dropdown als ie wordt verwijderd uit de lijst. Heb ik in de mock niet gedaan.
-
-In de combinatie kolom kun je aangeven of je regels wilt combineren. && en || tonen een nieuwe rij. 'leeg' verwijdert alle rijen die onder de huidige invoerrij liggen en behoren bij de rule.
-
-Vereisten:
-Een tag welke een rule identificeert. Alle regels van een gecombineerde rule hebben dezelfde tag. Zo kan ik zien welke regels bij elkaar horen.
-
-Tenslotte:
-Morgen (Do) ga ik beginnen met de mock in struts te bouwen. Hopelijk kan het als 'jsp-module' die je op meerdere plaatsen kunt gebruiken.
-Qua DTO's heb ik nu nog geen idee. Misschien krijg ik al doende inspiratie.
-Ik ga nu nog wat met de css emmeren.
+Hoewel het nu eenmaal een gegeven is, vind ik deze manier van communiceren via mail niet geweldig. Er zit veel tijd tussen vraag en antwoord. Bovendien vergt het opstellen van een mail mij onevenredig veel tijd en vergeet ik vast een aantal zaken. Ook is het moeilijk zaken te verduidelijken zonder dat je het kunt zien.
 
 Groet,
 Ton
+
+Op 15-10-2015 om 3:29 schreef Jakko Vos:
+> Hoi Ton,
+>
+> Dat ziet er al goed uit!
+>
+> Ik begrijp dat de 'waarde' kolom al naar gelang het gekozen form of item veld (noot : bij formulieren geldt dit, bij bv real estate heb je real estate item velden en bij project heb je projectvelden) kan veranderen, dit kan dan een datum selectie zijn, een drop down, of een vrij veld. Klopt dit?
+>
+> We zullen inderdaad al gaande de exacte dto('s) moeten bepalen. Ik stel voor dat jij al gaande met de jsp realisatie ook dto's opbouwt zoals jij ze nodig hebt. Dat werkt beter denk ik dan dat ik erover na ga zitten denken en een eerste aanzet maak.
+>
+> Qua acties denk ik (maar ik weet niet of dat haalbaar is) dat sommige acties maar 1 keer mogelijk zijn (bijv status wijziging), maar andere acties meerdere keren (ik zou me kunnen voorstellen dat we de "mail naar" actie zo maken dat je 1 adres kunt opgeven en als je > 1 mails wilt versturen dat je meerdere acties van hetzelfde type maakt. MAAR het kan natuurlijk ook max 1 "mail naar" actie met een lijst adressen zijn, dat maakt mij niet uit).
+>
+> Ik denk dat ik van het weekend weer tijd heb om wat aan design te doen, ik moet nu nog wat adressering voor Rosco aanpassen. Het werken op een laptop met klein scherm valt niet mee als je verwent bent met 2x 24 inch haha!
+>
+> Succes morgen (later vandaag) met de verdere uitwerking!
+>
+> Gr
+> Jakko
+>
+> Jakko,
+>
+> Ik heb een mock gemaakt van het beheer van de business-rules.
+> Het was een heel gepruts, maar zodoende krijg ik wel meer inzicht in de vereisten.
+>
+> Het is een html-mock die op github staat. (Kan ik er ook thuis wat aan doen)
+> Je kunt de zip-file downloaden via: https://github.com/TonHolsink/b-rules/archive/master.zip
+> Als je hem hebt uitgepakt: index.html openen
+>
+> Je kunt de regels bewerken door op de rij te klikken.
+> De invoerrij veschijnt onder de rij waarop wordt geklikt, of (als het een gecombineerde regel is) onder de laatste van de gecombineerde regel.
+> Het blijft een mock, dus ophalen van business rules uit de backend doe ik niet na.
+> Als je op een gecombineerde (meerregelige) rule klikt, zie je dat niet in het edit gedeelte.
+> Normaal gesproken zou ik via ajax een compleet html-fragment van het editgedeelte ophalen.
+>
+> Kolommen:
+> In de Trigger kolom zie je dat het selecteren van 'Periodiek', dropdown keuzes toont, 'Vast tijdstip' een teksttinput, 'Opslaan' geen en 'Statuswijziging' ook een dropdown.
+> NOOT:
+> Ik moet van te voren weten wat voor type inputelement (dropdown, text, kalender etc.) bij de verschillende triggers hoort en wat eventueel de keuzes zijn als het een lijst is.
+>
+> In de Parameter kolom kun je velden uit het formulier of de itemtabel kiezen
+> Ik heb ze in aparte dropdowns gezet, omdat het voorstelbaar is dat de tekst die bij een formulierveld hoort, hetzelfde is als een itemveld.
+> Als ze allemaal in 1 lijstje staan, kun je het verschil niet zien.
+> In de mock tonen alle formuliervelden een dropdown in de waarde kolom. Alle itemvelden tonen een tekstinput. Dit is alleen maar als voorbeeld.
+> Het selecteren van een veld (formulier of item) veroorzaakt in het echt een ajax-call die voor het volgende moet zorgen:
+> 'Waarde' kolom:
+> 1) Het type waarde (dropdown, text, kalender etc.)
+> 2) Eventuele keuzes igv lijstjes
+> 'Acties' kolom:
+> 1) De lijst met acties waaruit kan worden gekozen
+> NOOT:
+> De lijst met formuliervelden is gevuld met de vraagstelling. Dit is kan natuurlijk erg lang worden. Abstracte codes zeggen een gebruiker echter niets.
+> Hier moeten we over nadenken.
+>
+> De 'Operatie' kolom spreekt voor zich.
+>
+> In de 'Acties' kolom kun je mbv de dropdown een lijst met acties vullen. De acties kun je ook weer verwijderen uit de lijst.
+> NOOT:
+> Ik kan me voorstellen dat je een actie maar 1 keer kunt kiezen. Ik zou bijvoorbeeld na toevoegen aan de lijst, de actie kunnen verwijderen uit de dropdown.
+> En weer toevoegen aan de dropdown als ie wordt verwijderd uit de lijst. Heb ik in de mock niet gedaan.
+>
+> In de combinatie kolom kun je aangeven of je regels wilt combineren. && en || tonen een nieuwe rij. 'leeg' verwijdert alle rijen die onder de huidige invoerrij liggen en behoren bij de rule.
+>
+> Vereisten:
+> Een tag welke een rule identificeert. Alle regels van een gecombineerde rule hebben dezelfde tag. Zo kan ik zien welke regels bij elkaar horen.
+>
+> Tenslotte:
+> Morgen (Do) ga ik beginnen met de mock in struts te bouwen. Hopelijk kan het als 'jsp-module' die je op meerdere plaatsen kunt gebruiken.
+> Qua DTO's heb ik nu nog geen idee. Misschien krijg ik al doende inspiratie.
+> Ik ga nu nog wat met de css emmeren.
+>
+> Groet,
+> Ton
+>
+>
+

@@ -301,12 +301,10 @@
 									<td style="padding-right: 30px;">
 										<select class="actionSelect form-control input-sm">
 											<option value="">Kies...</option>
-											<option value="actie1">actie #1</option>
-											<option value="actie2">actie #2</option>
-											<option value="actie3">actie #3</option>
-											<option value="actie4">actie #4</option>
-											<option value="actie5">actie #5</option>
+											<option value="MAIL">Stuur mail</option>
+											<option value="STATUS">Wijzig status</option>
 										</select>
+										<div class="action-frag-div"></div>
 										<ul class="actionList compact"></ul>
 									</td>
 									<td class="pos-relative">
@@ -323,6 +321,39 @@
 								</tr>
 							</tbody>
 						</table>
+					</div>
+
+					<!-- *************************** ACTIE FRAGMENTEN *************************** -->
+					<!-- *************************** ACTIE FRAGMENTEN *************************** -->
+					<!-- *************************** ACTIE FRAGMENTEN *************************** -->
+
+					<!-- ** MAIL **************************************************************** -->
+					<div id="action-frag-mail" class="action-frag clearfix" style="display: none;">
+						<div>
+							<input class="frag-mail-input form-control input-sm">
+						</div>
+						<div class="btn-group pull-right" >
+							<a class="action-frag-escape btn btn-default btn-sm" href="javascript:;"><i class="fa fa-close"></i></a>
+							<a class="action-frag-save btn btn-default btn-sm" href="javascript:;"><i class="fa fa-save"></i></a>
+						</div>
+					</div>
+
+					<!-- ** MAIL **************************************************************** -->
+					<div id="action-frag-status" class="action-frag clearfix" style="display: none;">
+						<div>
+							<select class="form-control input-sm">
+								<option value="">Kies...</option>
+								<option value="STAT1">Status #1</option>
+								<option value="STAT2">Status #2</option>
+								<option value="STAT3">Status #3</option>
+								<option value="STAT4">Status #4</option>
+								<option value="STAT5">Status #5</option>
+							</select>
+						</div>
+						<div class="btn-group pull-right" >
+							<a class="action-frag-escape btn btn-default btn-sm" href="javascript:;"><i class="fa fa-close"></i></a>
+							<a class="action-frag-save btn btn-default btn-sm" href="javascript:;"><i class="fa fa-save"></i></a>
+						</div>
 					</div>
 
 				</div> <!-- .content-area -->
@@ -394,18 +425,33 @@
 				function handleActionSelectChange($el) {
 					var $td = $el.closest('td');
 					var $opt = $el.find('option:selected');
+					var $fragDiv = $td.find('.action-frag-div');
+					// console.log($opt.attr('data-typ'));
+					$('.action-frag').hide();
 					var v = $el.val();
-					if (v) {
-						$td.find('.actionList').append(
-							'<li data-action="'
-							+ v
-							+ '" class="pos-relative" >'
-							+ $opt.text()
-							+ '<a href="javascript:;" class="actionDel btn btn-sm" style="position: absolute; right: -30px; top: -5px;"><i class="fa fa-minus"></i></a>'
-							+ '</li>');
-						$opt.hide();
-						$el.val('');
+
+					switch (v) {
+						case "MAIL":
+							fragMailInit($fragDiv);
+							break;
+						case "STATUS":
+							fragStatusInit($fragDiv);
+							break;
 					}
+					// if (v) {
+
+					// 	$td.find('.actionList').append(
+					// 		'<li data-action="'
+					// 		+ v
+					// 		+ '" class="pos-relative" >'
+					// 		+ $opt.text()
+					// 		+ '<a href="javascript:;" class="actionDel btn btn-sm" style="position: absolute; right: -30px; top: -5px;"><i class="fa fa-minus"></i></a>'
+					// 		+ '</li>');
+					// 	// $opt.hide(); //Werkt niet in IE
+					// 	//$opt.remove(); //Werkt wel
+
+					// 	$el.val('');
+					// }
 				}
 
 				function handleActionDel($el) {
@@ -430,6 +476,10 @@
 							//Toolbar ff uit de DOM halen (events bewaren)
 							//om deze in de laatste rij te kunnen plaatsen
 							var $bar = $('#ruleToolbar').detach();
+							//parkeer de mogelijke action-frag uit de rij naar het eind van de content-area
+							$('.action-frag').appendTo('.content-area').hide();
+
+							//Maak een copie
 							var $row2 = $row.clone();
 							//Toolbar er weer in
 							$row2.children().eq(-1).append($bar);
@@ -441,13 +491,16 @@
 					} else {
 						//Dit is de laatste
 
+						//parkeer de mogelijke action-frag uit de rij naar het eind van de content-area
+						$('.action-frag').appendTo('.content-area').hide();
+
 						//Toolbar in deze rij plaatsen, want het wordt de laatste rij
 						$row.children().eq(-1).append($('#ruleToolbar'));
 
 						//Alle volgende rijen verwijderen
 						$row.nextAll('.ruleDefinitionRow').remove();
 						//Je moet weer acties kunnen selecteren en alle opties zichtbaar
-						$row.find('.actionSelect').show().children().show();
+						$row.find('.actionSelect').show().val('').children().show();
 					}
 				}
 
@@ -520,7 +573,7 @@
 					$sel = $row.find('.actionSelect');
 					$sel.show()[0].selectedIndex = 0;
 					//Opties zichtbaar maken
-					$sel.children().show();
+					// $sel.children().show();
 
 					$row.find('.actionList').empty();
 
@@ -528,6 +581,23 @@
 					$row.find('.combinationSelect')[0].selectedIndex = 0;
 
 					return $row;
+				}
+
+				//*****************************
+				//ACTION FRAGMENTEN
+				//*****************************
+
+				function fragMailInit($fragDiv) {
+					var $div = $('#action-frag-mail');
+					//Removes all but the first input and clears it
+					$div.find('.frag-mail-input').eq(0).nextAll().remove().end().val('');
+					$div.appendTo($fragDiv).show();
+				}
+
+				function fragStatusInit($fragDiv) {
+					var $div = $('#action-frag-status');
+					$div.find('select')[0].selectedIndex = 0;
+					$div.appendTo($fragDiv).show();
 				}
 
 				$(function() {
@@ -589,7 +659,41 @@
 						TOOLS.showToast('success', 'De business rule is opgeslagen');
 					});
 
+					//*****************************
+					//ACTION FRAGMENTEN
+					//*****************************
 
+					$('.action-frag-escape').on('click', function() {
+						//Action select wissen
+						$(this).closest('td').find('.actionSelect').val('');
+
+						$('.action-frag').hide();
+					});
+
+					$('.action-frag-save').on('click', function() {
+						//Action select wissen
+						$(this).closest('td').find('.actionSelect').val('');
+
+						$('.action-frag').hide();
+					});
+
+					//*****************************
+					//ACTION MAIL
+					//*****************************
+
+					$('#action-frag-mail').on('keyup', function(event) {
+						var $el = $(event.target);
+						if ($el.hasClass('frag-mail-input')) {
+							//Toon nieuwe input voor email
+							if (event.keyCode == 13) {
+								if ($.trim($el.val()).length > 0) {
+									var $newInput = $el.clone().val('');
+									$el.after($newInput);
+									$newInput.focus();
+								}
+							}
+						}
+					});
 				});
 
 			})();

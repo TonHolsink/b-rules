@@ -435,20 +435,6 @@
 							fragStatusInit($fragDiv);
 							break;
 					}
-					// if (v) {
-
-					// 	$td.find('.actionList').append(
-					// 		'<li data-action="'
-					// 		+ v
-					// 		+ '" class="pos-relative" >'
-					// 		+ $opt.text()
-					// 		+ '<a href="javascript:;" class="actionDel btn btn-sm" style="position: absolute; right: -30px; top: -5px;"><i class="fa fa-minus"></i></a>'
-					// 		+ '</li>');
-					// 	// $opt.hide(); //Werkt niet in IE
-					// 	//$opt.remove(); //Werkt wel
-
-					// 	$el.val('');
-					// }
 				}
 
 				function handleActionDel($el) {
@@ -594,6 +580,51 @@
 					$div.appendTo($fragDiv).show();
 				}
 
+				function addActionListItem($td, list, t) {
+					var $sel = $td.find('.actionSelect');
+					//Als t dan custom text, anders
+					var txt = t || list;
+
+					$td.find('.actionList').append(
+						'<li data-action="'
+						+ $sel.val()
+						+ '" data-list="'
+						+ list
+						+ '" class="pos-relative" >'
+						+ $sel.find('option:selected').text() + ': ' + txt
+						+ '<a href="javascript:;" class="actionDel btn btn-sm" style="position: absolute; right: -30px; top: -5px;"><i class="fa fa-minus"></i></a>'
+						+ '</li>');
+
+					$sel.val('');
+				}
+
+				function fragMailSave($td) {
+					var adrList = [];
+
+					//Adres lijst vullen vanuit de inputs
+					//Alleen gevulde komen in aanmerking
+					$td.find('.frag-mail-input').each(function() {
+						var v = $.trim($(this).val());
+						if (v) {
+							adrList.push(v);
+						}
+					});
+
+					//Alleen toevoegen als er adressen zijn
+					if (adrList.length > 0) {
+						addActionListItem($td, adrList);
+					}
+
+				}
+
+				function fragStatusSave($td) {
+					var list = [];
+					var $sel = $('#action-frag-status select');
+					if ($sel.val()) {
+						addActionListItem($td, $sel.val(), $sel.find('option:selected').text());
+					}
+				}
+
 				function fragStatusInit($fragDiv) {
 					var $div = $('#action-frag-status');
 					$div.find('select')[0].selectedIndex = 0;
@@ -671,9 +702,18 @@
 					});
 
 					$('.action-frag-save').on('click', function() {
-						//Action select wissen
-						$(this).closest('td').find('.actionSelect').val('');
 
+						var $td = $(this).closest('td');
+						//Bepalen type
+						var id = $(this).closest('.action-frag').attr('id');
+						switch (id) {
+							case 'action-frag-mail':
+								fragMailSave($td);
+								break;
+							case 'action-frag-status':
+								fragStatusSave($td);
+								break;
+						}
 						$('.action-frag').hide();
 					});
 

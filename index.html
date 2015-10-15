@@ -505,6 +505,9 @@
 				}
 
 				function showDefRow($row) {
+					//parkeer de mogelijke action-frag uit de rij naar het eind van de content-area
+					$('.action-frag').appendTo('.content-area').hide();
+
 					//Verwijder alle ruleDefinitionRow rijen, behalve de eerste
 					var $rowDef = $('.ruleDefinitionRow').eq(0);
 					//Toolbar in deze rij plaatsen, want het wordt de laatste rij

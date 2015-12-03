@@ -129,12 +129,10 @@
 							if (v1 > 0) {
 								if (v1 > v2) {
 									setval($ctrs.eq(i), v2);
-									// $ctrs.eq(i).attr('data-val', v2);
 								}
 							}
 						}
 						setval($ctrs.eq(idx+1), v);
-						// $ctrs.eq(idx+1).attr('data-val', v);
 					} else if (v > ov) {
 						for (i = idx+1; i <= 3; i++) {
 							var v1 = val($ctrs.eq(i));
@@ -142,13 +140,10 @@
 							if (v2 <= 100) {
 								if (v2 > v1) {
 									setval($ctrs.eq(i), v2);
-									// $ctrs.eq(i).attr('data-val', v2);
 								}
 							}
 						}
 					}
-
-					// $this.attr('data-val', v);
 					setval($this, v);
 				}
 

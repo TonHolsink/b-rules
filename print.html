@@ -13,16 +13,38 @@
 		<link href="resources/css/print.css" rel="stylesheet">
 		<!-- local  css -->
 		<style type="text/css">
-			ul.compact {
-				list-style-position: inside;
-				margin: 0;
-				padding: 0;
+			.thread {
+				border-top: 2px solid black;
 			}
-			tr.ruleDefinitionRow, .table-hover > tbody > tr.ruleDefinitionRow:hover {
-				background: #D9EDF7;
+			.threadHeader {
+
 			}
-			tr.odd td {
-				background-color: #eee;
+			.threadMessages {
+
+			}
+			.threadMessage {
+				border-top: 1px solid grey;
+			}
+			.threadMessageText {
+
+			}
+			@media print {
+				.col-first, .col-second {
+					display: inline-block;
+					padding-right: 0;
+				}
+				.col-second {
+					padding-left: 0;
+				}
+/*				.col-first+.col-second:before {
+					content: ": "
+				}
+*/
+				.col-first:after {
+					content: ": "
+				}
+
+
 			}
 		</style>
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -105,258 +127,84 @@
 							</li>
 						</ul>
 					</div>
-
-					<div id="detailDiv" class="panel panel-forms">
-						<div class="panel-heading clearfix">
-							<strong>Formulier details</strong>
-							<div class="pull-right">
-								<a href="javascript:;" id="editBtn" class="btn btn-default btn-sm">Bewerken</a>
-							</div>
+					<div class="print-row clearfix margin-bottom">
+						<div class="pull-right">
+							<a href="javascript:;" id="printPage" class="btn btn-default btn-sm">Printen</a>
 						</div>
-						<div class="panel-body padding">
-							<div class="row">
-								<strong class="col-md-2">Naam</strong>
-								<div class="col-md-10">Test kastanje intern formulier</div>
-							</div>
-							<div class="row">
-								<strong class="col-md-2">Omschrijving</strong>
-								<div class="col-md-10">Test formulier</div>
-							</div>
-							<div class="row">
-								<strong class="col-md-2">Status</strong>
-								<div class="col-md-10">In gebruik</div>
-							</div>
-							<div class="row">
-								<strong class="col-md-2">Laatste mutatie</strong>
-								<div class="col-md-10">06-10-2015 12:00</div>
-							</div>
-							<div class="row">
-								<strong class="col-md-2">Versie</strong>
-								<div class="col-md-10">1</div>
-							</div>
-						</div> <!-- .panel-body -->
-					</div> <!-- detailDiv -->
+					</div> <!-- print-row -->
 
-					<form novalidate="true" id="editForm" role="form">
-						<input name="id" value="11" id="formId" type="hidden">
-						<div id="editDiv" class="panel panel-forms form-horizontal" style="display: none;">
-							<div class="panel-heading">
-								<strong>Formulier details</strong>
+					<div class="thread margin-bottom">
+						<div class="threadHeader">
+							<div class="row">
+								<strong class="col-md-2 col-first">Onderwerp #1</strong>
+								<div class="col-md-10 col-second">Test kastanje intern formulier</div>
 							</div>
-							<div class="panel-body">
-								<div class="form-group form-group-compact form-inline">
-									<div class="col-sm-2">
-										<label for="inputName" class="control-label">Naam</label>
-										<i class="mandatory"></i>
-									</div>
-									<div class="col-md-10">
-										<input name="dto.name" size="50" value="Test kastanje intern formulier" id="inputName" class="form-control input-sm" data-error="Dit is een verplicht veld" required="true" type="text">
-										<div class="help-block with-errors"></div>
-									</div>
+						</div> <!-- threadHeader -->
+						<div class="threadMessages">
+							<div class="threadMessage">
+								<div class="row">
+									<strong class="col-md-2 col-first">Aan</strong>
+									<div class="col-md-10 col-second">J. Willemse</div>
 								</div>
-								<div class="form-group form-group-compact form-inline">
-									<div class="col-sm-2">
-										<label for="inputDescription" class="control-label">Omschrijving</label>
-										<i class="mandatory"></i>
-									</div>
-									<div class="col-md-10">
-										<input name="dto.description" size="50" value="Test formulier" id="inputDescription" class="form-control input-sm" data-error="Dit is een verplicht veld" required="true" type="text">
-										<div class="help-block with-errors"></div>
-									</div>
+								<div class="row">
+									<strong class="col-md-2 col-first">Cc</strong>
+									<div class="col-md-10 col-second">P.Pietersen</div>
 								</div>
-								<div class="form-group form-group-compact form-inline">
-									<div class="col-sm-2">
-										<label for="inputStatus" class="control-label">Status</label>
-									</div>
-									<div class="col-md-10">
-										<select name="priorityInternals" id="inputStatus" class="form-control input-sm">
-											<option value="PUBLISHED" selected="selected">In gebruik</option>
-											<option value="CLOSED">Vervallen</option>
-										</select>
-									</div>
+								<div class="threadMessageText">
+									Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent placerat placerat elit, at scelerisque velit sagittis vel. Sed ullamcorper at tortor et bibendum. Proin auctor, quam vel placerat cursus, nibh dolor commodo lorem, in tempus ante velit sit amet erat. Nullam efficitur turpis in quam lacinia, elementum feugiat purus luctus. Sed eu finibus quam. Praesent orci dolor, mattis et enim at, posuere feugiat nulla. Morbi semper, ante ac condimentum faucibus, enim nibh placerat odio, at ullamcorper mauris ipsum quis sem. Nam volutpat, mauris non mollis cursus, turpis nisi mattis quam, scelerisque euismod elit nisi sit amet velit. Vestibulum tellus lacus, maximus scelerisque dolor quis, gravida tristique nisi. Aliquam blandit cursus pulvinar.
 								</div>
-							</div> <!-- .panel-body -->
-							<div class="panel-footer text-right padding">
-								<button style="pointer-events: all; cursor: pointer;" type="submit" id="btnSubmit" class="btn btn-primary btn-sm">Opslaan</button>
-							</div> <!-- .panel-footer -->
-						</div> <!-- editDiv -->
-					</form> <!-- editForm -->
-
-					<div id="rulesDiv" class="panel panel-forms table-responsive">
-						<div class="panel-heading clearfix">
-							<strong>Business rules</strong>
-							<div class="pull-right">
-								<a href="javascript:;" id="newRuleBtn" class="btn btn-default btn-sm">Nieuw</a>
+							</div> <!-- threadMessage -->
+							<div class="threadMessage">
+								<div class="row">
+									<strong class="col-md-2 col-first">Aan</strong>
+									<div class="col-md-10 col-second">J. Willemse</div>
+								</div>
+								<div class="row">
+									<strong class="col-md-2 col-first">Cc</strong>
+									<div class="col-md-10 col-second">P.Pietersen</div>
+								</div>
+								<div class="threadMessageText">
+									Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent placerat placerat elit, at scelerisque velit sagittis vel. Sed ullamcorper at tortor et bibendum. Proin auctor, quam vel placerat cursus, nibh dolor commodo lorem, in tempus ante velit sit amet erat. Nullam efficitur turpis in quam lacinia, elementum feugiat purus luctus. Sed eu finibus quam. Praesent orci dolor, mattis et enim at, posuere feugiat nulla. Morbi semper, ante ac condimentum faucibus, enim nibh placerat odio, at ullamcorper mauris ipsum quis sem. Nam volutpat, mauris non mollis cursus, turpis nisi mattis quam, scelerisque euismod elit nisi sit amet velit. Vestibulum tellus lacus, maximus scelerisque dolor quis, gravida tristique nisi. Aliquam blandit cursus pulvinar.
+								</div>
+							</div> <!-- threadMessage -->
+						</div> <!-- threadMessages -->
+					</div> <!-- thread -->
+					<div class="thread margin-bottom">
+						<div class="threadHeader">
+							<div class="row">
+								<strong class="col-md-2 col-first">Onderwerp #2</strong>
+								<div class="col-md-10 col-second">Test kastanje intern formulier</div>
 							</div>
-						</div>
-
-						<table class="table table-condensed table-hover">
-							<thead>
-								<tr>
-									<th class="col-sm-2">Trigger</th>
-									<th class="col-sm-3">Parameter</th>
-									<th class="col-sm-1">Operatie</th>
-									<th class="col-sm-2">Waarde</th>
-									<th class="col-sm-3">Acties</th>
-									<th class="col-sm-1">Combinatie</th>
-								</tr>
-							</thead>
-							<tbody id="rulesTbl">
-								<tr data-rule="RULE#1" class="pointer">
-									<td>Periodiek 30min</td>
-									<td>Wat doet het niet?</td>
-									<td>==</td>
-									<td>waarde #4</td>
-									<td>
-										<ul class="compact">
-											<li>Stuur mail: jaap@hobby.nl, ap@hobby.nl, gerrit@hobby.nl</li>
-											<li>Wijzig status: In behandeling</li>
-										</ul>
-
-									</td>
-									<td></td>
-								</tr>
-								<tr data-rule="RULE#2" class="odd pointer">
-									<td>Vast 12:30</td>
-									<td>Welk onderdeel betreft het?</td>
-									<td>==</td>
-									<td>Stofzuiger</td>
-									<td></td>
-									<td>&amp;&amp;</td>
-								</tr>
-								<tr data-rule="RULE#2" class="odd pointer">
-									<td></td>
-									<td>Datum aanmaak</td>
-									<td>&gt;=</td>
-									<td>12-10-2015</td>
-									<td>
-										<ul class="compact">
-											<li>Stuur mail: jan@pruts.nl, kees@pruts.nl, daan@pruts.nl</li>
-										</ul>
-
-									</td>
-									<td></td>
-								</tr>
-								<tr class="ruleDefinitionRow" style="display: none;">
-									<td>
-										<div class="triggerDiv">
-											<select class="triggerSelect form-control input-sm">
-												<option value="trigPeriod">Periodiek</option>
-												<option value="trigFixed">Vast tijdstip</option>
-												<option value="trigSave">Opslaan</option>
-												<option value="trigStatusChange">Statuswijziging</option>
-											</select>
-											<div class="trigParams trigPeriod">
-												<select class="form-control input-sm">
-													<option>15 min</option>
-													<option>30 min</option>
-													<option>60 min</option>
-													<option>12 uur</option>
-													<option>Dagelijks</option>
-													<option>Wekelijks</option>
-													<option>Maandelijks</option>
-												</select>
-											</div>
-											<div class="trigParams trigFixed" style="display: none;">
-												<input type="text" class="form-control input-sm" value="12:30">
-											</div>
-											<div class="trigParams trigStatusChange" style="display: none;">
-												<input type="text" class="form-control input-sm" value="status #2">
-											</div>
-										</div>
-									</td>
-									<td>
-										<div>
-											<select class="paramEntitySelect form-control input-sm">
-												<option value="">Kies formulier veld...</option>
-												<option value="1">Wat is het onderwerp van uw klacht?</option>
-												<option value="2">Welk onderdeel betreft het?</option>
-												<option value="3">Wat doet het niet</option>
-											</select>
-										</div>
-										<div>
-											<select class="paramItemSelect form-control input-sm">
-												<option value="">Kies item veld...</option>
-												<option value="1">Datum aanmaak</option>
-												<option value="2">Status</option>
-											</select>
-										</div>
-									</td>
-									<td>
-										<select class="operationSelect form-control input-sm">
-											<option value="">==</option>
-											<option value="">!=</option>
-											<option value="">&lt;</option>
-											<option value="">&lt;=</option>
-											<option value="">&gt;</option>
-											<option value="">&gt;=</option>
-										</select>
-									</td>
-									<td>
-										<select class="valueSelect form-control input-sm">
-											<option value="">Kies...</option>
-											<option value="waarde #1">waarde #1</option>
-											<option value="waarde #1">waarde #2</option>
-											<option value="waarde #1">waarde #3</option>
-											<option value="waarde #1">waarde #4</option>
-											<option value="waarde #1">waarde #5</option>
-										</select>
-										<input class="valueInput form-control input-sm" style="display: none;">
-									</td>
-									<td style="padding-right: 30px;">
-										<select class="actionSelect form-control input-sm">
-											<option value="">Kies...</option>
-											<option value="MAIL">Stuur mail</option>
-											<option value="STATUS">Wijzig status</option>
-										</select>
-										<div class="action-frag-div"></div>
-										<ul class="actionList compact"></ul>
-									</td>
-									<td class="pos-relative">
-										<select class="combinationSelect form-control input-sm">
-											<option value=""></option>
-											<option value="&amp;&amp;">&amp;&amp;</option>
-											<option value="||">||</option>
-										</select>
-										<div id="ruleToolbar" class="btn-group" style="position: absolute; bottom: 0; right: 15px;">
-											<a id="ruleEscapeBtn" class="btn btn-default btn-sm" href="javascript:;"><i class="fa fa-close"></i></a>
-											<a id="ruleSaveBtn" class="btn btn-default btn-sm" href="javascript:;"><i class="fa fa-save"></i></a>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-
-					<!-- *************************** ACTIE FRAGMENTEN *************************** -->
-					<!-- *************************** ACTIE FRAGMENTEN *************************** -->
-					<!-- *************************** ACTIE FRAGMENTEN *************************** -->
-
-					<!-- ** MAIL **************************************************************** -->
-					<div id="action-frag-mail" class="action-frag clearfix" style="display: none;">
-						<div>
-							<input class="frag-mail-input form-control input-sm">
-						</div>
-						<div class="btn-group pull-right" >
-							<a class="action-frag-escape btn btn-default btn-sm" href="javascript:;"><i class="fa fa-close"></i></a>
-							<a class="action-frag-save btn btn-default btn-sm" href="javascript:;"><i class="fa fa-save"></i></a>
-						</div>
-					</div>
-
-					<!-- ** MAIL **************************************************************** -->
-					<div id="action-frag-status" class="action-frag clearfix" style="display: none;">
-						<div>
-							<select class="form-control input-sm">
-								<option value="">Kies...</option>
-								<option value="STAT1">Afgehandeld</option>
-								<option value="STAT2">In behandeling</option>
-							</select>
-						</div>
-						<div class="btn-group pull-right" >
-							<a class="action-frag-escape btn btn-default btn-sm" href="javascript:;"><i class="fa fa-close"></i></a>
-							<a class="action-frag-save btn btn-default btn-sm" href="javascript:;"><i class="fa fa-save"></i></a>
-						</div>
-					</div>
+						</div> <!-- threadHeader -->
+						<div class="threadMessages">
+							<div class="threadMessage">
+								<div class="row">
+									<strong class="col-md-2 col-first">Aan</strong>
+									<div class="col-md-10 col-second">J. Willemse</div>
+								</div>
+								<div class="row">
+									<strong class="col-md-2 col-first">Cc</strong>
+									<div class="col-md-10 col-second">P.Pietersen</div>
+								</div>
+								<div class="threadMessageText">
+									Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent placerat placerat elit, at scelerisque velit sagittis vel. Sed ullamcorper at tortor et bibendum. Proin auctor, quam vel placerat cursus, nibh dolor commodo lorem, in tempus ante velit sit amet erat. Nullam efficitur turpis in quam lacinia, elementum feugiat purus luctus. Sed eu finibus quam. Praesent orci dolor, mattis et enim at, posuere feugiat nulla. Morbi semper, ante ac condimentum faucibus, enim nibh placerat odio, at ullamcorper mauris ipsum quis sem. Nam volutpat, mauris non mollis cursus, turpis nisi mattis quam, scelerisque euismod elit nisi sit amet velit. Vestibulum tellus lacus, maximus scelerisque dolor quis, gravida tristique nisi. Aliquam blandit cursus pulvinar.
+								</div>
+							</div> <!-- threadMessage -->
+							<div class="threadMessage">
+								<div class="row">
+									<strong class="col-md-2 col-first">Aan</strong>
+									<div class="col-md-10 col-second">J. Willemse</div>
+								</div>
+								<div class="row">
+									<strong class="col-md-2 col-first">Cc</strong>
+									<div class="col-md-10 col-second">P.Pietersen</div>
+								</div>
+								<div class="threadMessageText">
+									Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent placerat placerat elit, at scelerisque velit sagittis vel. Sed ullamcorper at tortor et bibendum. Proin auctor, quam vel placerat cursus, nibh dolor commodo lorem, in tempus ante velit sit amet erat. Nullam efficitur turpis in quam lacinia, elementum feugiat purus luctus. Sed eu finibus quam. Praesent orci dolor, mattis et enim at, posuere feugiat nulla. Morbi semper, ante ac condimentum faucibus, enim nibh placerat odio, at ullamcorper mauris ipsum quis sem. Nam volutpat, mauris non mollis cursus, turpis nisi mattis quam, scelerisque euismod elit nisi sit amet velit. Vestibulum tellus lacus, maximus scelerisque dolor quis, gravida tristique nisi. Aliquam blandit cursus pulvinar.
+								</div>
+							</div> <!-- threadMessage -->
+						</div> <!-- threadMessages -->
+					</div> <!-- thread -->
 
 				</div> <!-- .content-area -->
 			</div> <!-- .main-content -->
@@ -396,348 +244,13 @@
 
 			(function() {
 
-				function toggleDetail() {
-					$('#detailDiv, #rulesDiv, #editDiv').toggle('slow');
-					$('#back-to-detail').parent().toggle();
-				}
-
-				function handleTriggerSelectChange($el) {
-					var $td = $el.closest('td');
-					$td.find('.trigParams').hide();
-					$td.find('.' + $el.val()).show();
-				}
-
-				function handleParamEntitySelectChange($el) {
-					var $row = $el.closest('tr');
-					$row.find('.paramItemSelect').val('');
-
-					$row.find('.valueSelect').val('').show();
-					$row.find('.valueInput').val('').hide();
-
-				}
-
-				function handleParamItemSelectChange($el) {
-					var $row = $el.closest('tr');
-					$row.find('.paramEntitySelect').val('');
-
-					$row.find('.valueSelect').hide();
-					$row.find('.valueInput').val('').show();
-				}
-
-				function handleActionSelectChange($el) {
-					var $td = $el.closest('td');
-					var $opt = $el.find('option:selected');
-					var $fragDiv = $td.find('.action-frag-div');
-					// console.log($opt.attr('data-typ'));
-					$('.action-frag').hide();
-					var v = $el.val();
-
-					switch (v) {
-						case "MAIL":
-							fragMailInit($fragDiv);
-							break;
-						case "STATUS":
-							fragStatusInit($fragDiv);
-							break;
-					}
-				}
-
-				function handleActionDel($el) {
-					var $td = $el.closest('td');
-					var $li = $el.closest('li');
-					var v = $li.attr('data-action');
-					//optie zichtbaar maken in select
-					$td.find('.actionSelect').children('[value="' + v + '"]').show();
-					$li.remove();
-				}
-
-				function handleCombinationSelectChange($el) {
-					var $row = $el.closest('tr');
-					if ($el.val()) {
-						//&& of || gekozen
-						//Alleen als het de laatste is
-						if ($row.next('.ruleDefinitionRow').length == 0) {
-							//Acties verbergen en legen
-							$row.find('.actionSelect').hide();
-							$row.find('.actionList').empty();
-
-							//Toolbar ff uit de DOM halen (events bewaren)
-							//om deze in de laatste rij te kunnen plaatsen
-							var $bar = $('#ruleToolbar').detach();
-							//parkeer de mogelijke action-frag uit de rij naar het eind van de content-area
-							$('.action-frag').appendTo('.content-area').hide();
-
-							//Maak een copie
-							var $row2 = $row.clone();
-							//Toolbar er weer in
-							$row2.children().eq(-1).append($bar);
-							//TriggerDiv nieuwe rij verwijderen
-							$row2.find('.triggerDiv').remove();
-							//row2 initialiseren naar begin staat!!!!!
-							initRuleDefinitionRow($row2).insertAfter($row);
-						}
-					} else {
-						//Dit is de laatste
-
-						//parkeer de mogelijke action-frag uit de rij naar het eind van de content-area
-						$('.action-frag').appendTo('.content-area').hide();
-
-						//Toolbar in deze rij plaatsen, want het wordt de laatste rij
-						$row.children().eq(-1).append($('#ruleToolbar'));
-
-						//Alle volgende rijen verwijderen
-						$row.nextAll('.ruleDefinitionRow').remove();
-						//Je moet weer acties kunnen selecteren en alle opties zichtbaar
-						$row.find('.actionSelect').show().val('').children().show();
-					}
-				}
-
-				function showDefRow($row) {
-					//parkeer de mogelijke action-frag uit de rij naar het eind van de content-area
-					$('.action-frag').appendTo('.content-area').hide();
-
-					//Verwijder alle ruleDefinitionRow rijen, behalve de eerste
-					var $rowDef = $('.ruleDefinitionRow').eq(0);
-					//Toolbar in deze rij plaatsen, want het wordt de laatste rij
-					$rowDef.children().eq(-1).append($('#ruleToolbar'));
-
-					$rowDef.nextAll('.ruleDefinitionRow').remove();
-					//Initialiseer en toon de eerste ruleDefinitionRow rij
-					if ($row) {
-						//Bestaande regel
-						initRuleDefinitionRow($rowDef).insertAfter($row).show();
-					} else {
-						//Nieuwe regel
-						initRuleDefinitionRow($rowDef).prependTo($('#rulesTbl')).show();
-					}
-				}
-
-				function handleRuleRowClick($row) {
-					//Doe alleen iets als er onder de regels van  1 rule
-					//geen zichtbare ruleDefinitionRows hangen
-					//nu ga ik nog uit van 1 rule regel, eigenlijk kunnen er dat er meer zijn en moeten
-					//de ruleDefinitionRows verschijnen onder de laatste  rule regel
-					//Deze moet in beeld scrollen. Doe ik nu niet voor de demo. Is te doen
-					//In het echt (met ajax call) controleer ik alleen maar of er zichtbare ruleDefinitonRows
-					//hangen onder de bij elkaar horende rule rij(en).
-					//Zo ja doe niets. Zo nee, doe ajax-call om de nieuwe ruleDefinitionRows op te halen,
-					//gooi alle oude ruleDefinitionRows weg, en hang de nieuwe onder de laatste rule-rij
-
-					//Zoek de laatste rij op die nog bij de business rule hoort;
-					var ruleCode = $row.attr('data-rule');
-					$row = $('tr[data-rule="' + ruleCode + '"]').eq(-1);
-
-					if ($row.next('.ruleDefinitionRow:visible').length == 0) {
-						// Niet zichtbaar, dus tonen
-						showDefRow($row);
-
-					} else {
-						//Zichtbaart dus doe niets
-						//Als dit leeg blijft kan de else-tak weg
-					}
-				}
-
-				function initRuleDefinitionRow($row) {
-					//Initialiseert een ruleDefinitionRow
-					//trigger kolom
-					var $sel = $row.find('.triggerSelect');
-					//Kan er niet zijn
-					if ($sel.length > 0) {
-						$sel[0].selectedIndex = 0;
-						$sel.trigger('change');
-					}
-
-					//parameter kolom
-					var $sel = $row.find('.paramEntitySelect');
-					$sel[0].selectedIndex = 0;
-					$sel.trigger('change');
-					$row.find('.paramItemSelect')[0].selectedIndex = 0;
-
-					//operatie  kolom
-					$row.find('.operationSelect')[0].selectedIndex = 0;
-
-					//waarde kolom
-					$row.find('.valueSelect')[0].selectedIndex = 0;
-					$row.find('.valueInput').val('');
-
-					//acties kolom
-					$sel = $row.find('.actionSelect');
-					$sel.show()[0].selectedIndex = 0;
-					//Opties zichtbaar maken
-					// $sel.children().show();
-
-					$row.find('.actionList').empty();
-
-					//combinatie kolom
-					$row.find('.combinationSelect')[0].selectedIndex = 0;
-
-					return $row;
-				}
-
-				//*****************************
-				//ACTION FRAGMENTEN
-				//*****************************
-
-				function fragMailInit($fragDiv) {
-					var $div = $('#action-frag-mail');
-					//Removes all but the first input and clears it
-					$div.find('.frag-mail-input').eq(0).nextAll().remove().end().val('');
-					$div.appendTo($fragDiv).show();
-				}
-
-				function addActionListItem($td, list, t) {
-					var $sel = $td.find('.actionSelect');
-					//Als t dan custom text, anders
-					var txt = t || list;
-
-					$td.find('.actionList').append(
-						'<li data-action="'
-						+ $sel.val()
-						+ '" data-list="'
-						+ list
-						+ '" class="pos-relative" >'
-						+ $sel.find('option:selected').text() + ': ' + txt
-						+ '<a href="javascript:;" class="actionDel btn btn-sm" style="position: absolute; right: -30px; top: -5px;"><i class="fa fa-minus"></i></a>'
-						+ '</li>');
-
-					$sel.val('');
-				}
-
-				function fragMailSave($td) {
-					var adrList = [];
-
-					//Adres lijst vullen vanuit de inputs
-					//Alleen gevulde komen in aanmerking
-					$td.find('.frag-mail-input').each(function() {
-						var v = $.trim($(this).val());
-						if (v) {
-							adrList.push(v);
-						}
-					});
-
-					//Alleen toevoegen als er adressen zijn
-					if (adrList.length > 0) {
-						addActionListItem($td, adrList);
-					}
-
-				}
-
-				function fragStatusSave($td) {
-					var list = [];
-					var $sel = $('#action-frag-status select');
-					if ($sel.val()) {
-						addActionListItem($td, $sel.val(), $sel.find('option:selected').text());
-					}
-				}
-
-				function fragStatusInit($fragDiv) {
-					var $div = $('#action-frag-status');
-					$div.find('select')[0].selectedIndex = 0;
-					$div.appendTo($fragDiv).show();
-				}
 
 				$(function() {
 
 					YRMNU.activateTopmenuItem('#topMenu_SystemManagement');
 
-					$('#editBtn').on('click', function() {
-						toggleDetail();
-					});
-
-					$('#editForm').on('submit', function(event) {
-						event.preventDefault();
-						location.href='index.html';
-					});
-
-					$('#rulesBtn').on('click', function() {
-						toggleRules();
-					});
-
-					$('#rulesTbl').on('click', function(event) {
-						var $el = $(event.target);
-						var $row = $el.closest('tr');
-						// console.log($row);
-						if ($row.hasClass('ruleDefinitionRow')) {
-							if ($el.parent().hasClass('actionDel') || $el.hasClass('actionDel')) {
-								handleActionDel($el);
-							}
-						} else {
-							handleRuleRowClick($row);
-						}
-					});
-
-					$('#rulesTbl').on('change', function(event) {
-						var $el = $(event.target);
-						if ($el.hasClass('triggerSelect')) {
-							handleTriggerSelectChange($el);
-						} else if ($el.hasClass('paramEntitySelect')) {
-							handleParamEntitySelectChange($el);
-						} else if ($el.hasClass('paramItemSelect')) {
-							handleParamItemSelectChange($el);
-						} else if ($el.hasClass('actionSelect')) {
-							handleActionSelectChange($el);
-						} else if ($el.hasClass('combinationSelect')) {
-							handleCombinationSelectChange($el);
-						}
-					});
-
-					$('#newRuleBtn').on('click', function() {
-						showDefRow();
-					});
-
-					$('#ruleEscapeBtn').on('click', function() {
-						$('.ruleDefinitionRow').hide();
-					});
-
-					$('#ruleSaveBtn').on('click', function() {
-						//Voorlopig alleen verbergen
-						$('.ruleDefinitionRow').hide();
-						TOOLS.showToast('success', 'De business rule is opgeslagen');
-					});
-
-					//*****************************
-					//ACTION FRAGMENTEN
-					//*****************************
-
-					$('.action-frag-escape').on('click', function() {
-						//Action select wissen
-						$(this).closest('td').find('.actionSelect').val('');
-
-						$('.action-frag').hide();
-					});
-
-					$('.action-frag-save').on('click', function() {
-
-						var $td = $(this).closest('td');
-						//Bepalen type
-						var id = $(this).closest('.action-frag').attr('id');
-						switch (id) {
-							case 'action-frag-mail':
-								fragMailSave($td);
-								break;
-							case 'action-frag-status':
-								fragStatusSave($td);
-								break;
-						}
-						$('.action-frag').hide();
-					});
-
-					//*****************************
-					//ACTION MAIL
-					//*****************************
-
-					$('#action-frag-mail').on('keyup', function(event) {
-						var $el = $(event.target);
-						if ($el.hasClass('frag-mail-input')) {
-							//Toon nieuwe input voor email
-							if (event.keyCode == 13) {
-								if ($.trim($el.val()).length > 0) {
-									var $newInput = $el.clone().val('');
-									$el.after($newInput);
-									$newInput.focus();
-								}
-							}
-						}
+					$('#printPage').on('click', function() {
+						window.print();
 					});
 				});
 

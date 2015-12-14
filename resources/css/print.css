@@ -2,6 +2,7 @@
 	.nav-bar,
 	.main-intro,
 	.breadcrumb-row,
+	.print-row,
 	.footer {
 		display: none;
 	}
